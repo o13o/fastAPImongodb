@@ -2,38 +2,48 @@ from fastapi import FastAPI, Request
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from fastapi.responses import HTMLResponse
-from motor.motor_asyncio import AsyncIOMotorClient
-import os
 
 app = FastAPI()
 
-# Static files (keep for CSS/JS only)
+# Mount static directory
 app.mount("/static", StaticFiles(directory="app/static"), name="static")
 
 templates = Jinja2Templates(directory="app/templates")
 
-# 🔐 MongoDB Connection
-MONGO_URL = "mongodb+srv://azureuser:aA1234567890@swarnae-aicomm-clusters.global.mongocluster.cosmos.azure.com/?tls=true&authMechanism=SCRAM-SHA-256&retrywrites=false&maxIdleTimeMS=120000"
+# Sample products
+products = [
+    {
+        "id": 1,
+        "name": "Yellow Designer Dress",
+        "price": 2499,
+        "image": "/static/images/yellow_dress.jpg"
+    },
+    {
+        "id": 2,
+        "name": "White Formal Shirt",
+        "price": 1299,
+        "image": "/static/images/white_shirt.jpg"
+    },
+    {
+        "id": 3,
+        "name": "Blue Denim Jeans",
+        "price": 1899,
+        "image": "/static/images/blue_jeans.jpg"
+    },
+    {
+        "id": 4,
+        "name": "Red Ethnic Dress",
+        "price": 2999,
+        "image": "/static/images/red_dress.jpg"
+    }
+]
 
-client = AsyncIOMotorClient(MONGO_URL)
-db = client.ecommerceDB
-collection = db.products
-
-
-# 🏠 Home Page – Fetch Products From MongoDB
 @app.get("/", response_class=HTMLResponse)
 async def home(request: Request):
-    products = []
-
-    async for item in collection.find():
-        item["_id"] = str(item["_id"])
-        products.append(item)
-
     return templates.TemplateResponse("index.html", {
         "request": request,
         "products": products
     })
-
 
 @app.get("/cart", response_class=HTMLResponse)
 async def cart(request: Request):
