@@ -13,7 +13,7 @@ stages:
   jobs:
   - job: BuildJob
     pool:
-      name: TestAgent   # ✅ Self-hosted pool
+      name: yasuagentpool   # ✅ Self-hosted pool
 
     steps:
     - script: |
@@ -46,7 +46,7 @@ stages:
   jobs:
   - deployment: DeploymentJob
     pool:
-      name: TestAgent   # ✅ Self-hosted pool again
+      name: yasuagentpool   # ✅ Self-hosted pool again
 
     environment: swarnaapp
 
