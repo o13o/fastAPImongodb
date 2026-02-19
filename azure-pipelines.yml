@@ -12,8 +12,8 @@ stages:
   displayName: Build Stage
   jobs:
   - job: BuildJob
-    pool:
-      name: yasuagentpool   # ✅ Self-hosted pool
+    # pool:
+    #   name: yasuagentpool   # ✅ Self-hosted pool
 
     steps:
     - script: |
@@ -45,8 +45,8 @@ stages:
 
   jobs:
   - deployment: DeploymentJob
-    pool:
-      name: yasuagentpool   # ✅ Self-hosted pool again
+    # pool:
+    #   name: yasuagentpool   # ✅ Self-hosted pool again
 
     environment: swarnaapp
 
