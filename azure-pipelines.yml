@@ -2,8 +2,8 @@ trigger:
 - main
 
 variables:
-  azureServiceConnectionId: 'e16d6cfa-a8cd-49c7-93b4-b8af9e59c75b'
-  webAppName: 'swarnaapp'
+  azureServiceConnectionId: '259b29c9-a617-4db4-a3a5-388086bbae7f'
+  webAppName: 'yasuapp'
   pythonVersion: '3.11'
 
 stages:
